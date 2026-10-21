@@ -1,53 +1,48 @@
-# LAYALI — Movy edition
+# LAYALI
 
-A private personal cinema using Movy's public catalog and playback metadata, with an interface matching its full-width billboard, floating navigation, ranked cards, and content rows.
+A personal, Netflix-inspired cinema interface backed by the public EgyDead catalog. The deployed Site is owner-private.
 
-## Local development
+## Run locally
 
-Node.js 22+; no installation or private API keys needed.
+Requires Node.js 22 or newer. No dependencies or API keys.
 
 ```sh
 npm run build
 npm run dev
 ```
 
-Open http://127.0.0.1:4173. Rebuild and restart after source edits.
+Open http://127.0.0.1:4173. After editing the source, run `npm run build` and restart the development server.
 
 ## Features
 
-- Movy home catalog scraped from its server-rendered page data, with a saved catalog snapshot if the source cannot be reached.
-- Full catalog search and paginated movies/shows/animation browsing through the same public data service used by Movy.
-- Details, show seasons, episode selection, and a browser-local watchlist.
-- Direct video playback with best available quality by default, manual resolution selection and playback position preservation.
-- Arabic subtitles selected by default when available, an explicit unavailable message otherwise, and subtitle/off controls.
-- SRT subtitles converted to WebVTT. Video manifests and segments are streamed through the backend using the provider's normal request headers.
-- No Movy page scripts, advertising scripts, pop-ups, or provider iframes are loaded in the interface.
+- Live server-side catalog scraping, Arabic/English search, pagination, and source posters.
+- Movies, series and anime filters, alphabetical/year sorting and title details.
+- My List stored in this browser's localStorage, with Arabic/RTL interface support.
+- No scripts, analytics, advertising frames or HTML from source pages are executed in the main interface.
+- Direct HLS playback when the public provider metadata exposes a compatible stream; native HLS or bundled hls.js handles playback without provider page/ad scripts.
+- Quality picker defaults to Best available, with Auto and the actual source resolutions. Preferences persist per browser; switching keeps playback position, volume, playback speed, and pause state. Native HLS browsers and hls.js are supported.
+- Direct StreamRuby links are resolved even when another provider appears first, including the rubyvidhub.com domain used by older titles.
+- The embed fallback lists StreamRuby only. Incompatible providers are excluded; titles without a compatible source show an unavailable message. Pop-up and redirect protection stays enabled.
+- Snapshot of 88 source titles displayed if the live source is unavailable.
 
-## Source
+## Playback limits
 
-- `page.html`: interface, catalog interactions, player, quality and subtitle controls.
-- `backend.mjs`: catalog scraping, data/playback API access, media and subtitle proxying.
-- `movy-codec.js`: Movy's public response transport codec; per-request public seeds are obtained through its normal endpoint. No private credentials are embedded.
-- `movy-seed.json`: initial catalog snapshot.
-- `vendor/`: bundled hls.js and its license.
-- `scripts/assemble.mjs`: builds `worker/index.js` from the source files.
+The source supplies external video servers. Where compatible public stream metadata is available, the app plays the video directly without executing provider scripts. The iframe sandbox excludes pop-ups, downloads, forms, and top-page navigation. Providers can still show advertising within their own iframe and may refuse sandboxed playback. This is **not a guarantee of completely ad-free video**. No DRM or provider access protections are bypassed. Direct playback of the spotlight film was verified in Chromium: currentTime advanced past one second, readyState was 4, paused was false, and no media error occurred. Provider availability can vary.
 
-## Limitations
+The upstream domain, markup, availability and host policies can change. These changes may require scraper maintenance. Watchlist storage is per browser; it is not synced between devices.
 
-Arabic subtitles and specific quality versions depend on upstream availability. Subtitle timing varies by release. Some 4K formats may not work in every browser; best-quality mode tries a lower quality when a fatal stream error occurs. Watchlists are stored in this browser and do not sync between devices. Provider APIs, domains and markup can change and may require maintenance.
+## Source files
 
-## Validation
+- `page.html`: responsive UI, styling and browser interactions.
+- `backend.mjs`: Worker request handler, scraper, proxy and playback discovery.
+- `seed.json`: initial catalog snapshot.
+- `scripts/assemble.mjs`: assembles the page and backend into `worker/index.js`.
+- `scripts/build.sh`: produces the deployable Worker under `dist/`.
 
-Live 4K playback of Project Hail Mary verified in Chromium, with Arabic subtitles enabled and 1,720 loaded cues. Home/catalog rendering, remote search, media manifest rewriting and SRT-to-VTT conversion verified.
+## Checks performed
 
-Additional checks: 4K → 720p switching preserved playback time, volume, speed and Arabic captions; captions can be turned off. Breaking Bad season 2 episode 2 played successfully after selecting the season/episode. Desktop and mobile screenshots reviewed. Run API regression checks with `node --test tests/movy.test.mjs`.
+Live catalog retrieval, remote search, title details, video server discovery, image proxy, and pagination with newly discovered titles passed locally. Client/server JavaScript syntax checked. Browser regression checks passed for one-click player loading, delayed metadata, retry, poster clicks, detail-page playback, source errors, close-during-fetch, and mobile layout. The actual upstream player and direct HLS playback were verified.
 
-## Media proxy authorization
+Quality controls verified with live 1080p playback, switching to 480p, retained position/volume/speed, paused switching, Auto selection, and mobile layout.
 
-`MEDIA_PROXY_SECRET` is a server-only secret configured in Sites runtime settings. Keep it out of client code, source, and the hosting manifest. Localhost development uses a temporary process-local key if this variable is absent.
-
-Media links carry expiring HMAC grants scoped to the video CDN origin. Each trusted playlist's initialization files, child playlists and video chunks receive grants for their actual origins, so new provider CDNs do not require additions to a fixed hostname list. Altered hosts and expired/unsigned grants are rejected. Range requests and partial responses remain supported.
-
-The player has a bounded stall timer with automatic quality fallback in Best available mode. Manually selected qualities show a retry message on failure.
-
-Playback discovery now runs through the provider's normal public browser endpoints, avoiding shared-server source-discovery rate limits. `/api/prepare` validates the resulting CDN URLs and issues server-signed proxy grants. The source transport codec is served locally; advertising/player page scripts are still excluded. Hosted outbound requests use an AbortController-based timeout compatible with the production runtime.
+Playback resolver regressions: `node --test tests/playback.test.mjs`. Covers Ruby after an incompatible first server, alternate Ruby domain, no compatible source, and compatible iframe fallback.
