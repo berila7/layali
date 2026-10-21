@@ -2,7 +2,7 @@
 async function fetchTimed(url,options={}) {
  const {timeoutMs=15000,...settings}=options;
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
- try{return await fetch(url,{...settings,signal:controller.signal})}finally{clearTimeout(timer)}
+ try{return await fetch(url,{...settings,redirect:settings.redirect==='error'?'manual':(settings.redirect||'manual'),signal:controller.signal})}finally{clearTimeout(timer)}
 }
 const ORIGIN='https://tv10.egydead.live';
 const decode=s=>String(s||'').replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n))).replace(/&quot;/g,'"').replace(/&#039;|&apos;/g,"'").replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
