@@ -41,3 +41,11 @@ Arabic subtitles and specific quality versions depend on upstream availability. 
 Live 4K playback of Project Hail Mary verified in Chromium, with Arabic subtitles enabled and 1,720 loaded cues. Home/catalog rendering, remote search, media manifest rewriting and SRT-to-VTT conversion verified.
 
 Additional checks: 4K → 720p switching preserved playback time, volume, speed and Arabic captions; captions can be turned off. Breaking Bad season 2 episode 2 played successfully after selecting the season/episode. Desktop and mobile screenshots reviewed. Run API regression checks with `node --test tests/movy.test.mjs`.
+
+## Media proxy authorization
+
+`MEDIA_PROXY_SECRET` is a server-only secret configured in Sites runtime settings. Keep it out of client code, source, and the hosting manifest. Localhost development uses a temporary process-local key if this variable is absent.
+
+Media links carry expiring HMAC grants scoped to the video CDN origin. Each trusted playlist's initialization files, child playlists and video chunks receive grants for their actual origins, so new provider CDNs do not require additions to a fixed hostname list. Altered hosts and expired/unsigned grants are rejected. Range requests and partial responses remain supported.
+
+The player has a bounded stall timer with automatic quality fallback in Best available mode. Manually selected qualities show a retry message on failure.
