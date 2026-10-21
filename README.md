@@ -20,6 +20,7 @@ Open http://127.0.0.1:4173. After editing the source, run `npm run build` and re
 - My List stored in this browser's localStorage, with Arabic/RTL interface support.
 - No scripts, analytics, advertising frames or HTML from source pages are executed in the main interface.
 - Direct HLS playback when the public provider metadata exposes a compatible stream; native HLS or bundled hls.js handles playback without provider page/ad scripts.
+- Quality picker defaults to Best available, with Auto and the actual source resolutions. Preferences persist per browser; switching keeps playback position, volume, playback speed, and pause state. Native HLS browsers and hls.js are supported.
 - Otherwise Watch now automatically loads a restricted third-party player, with alternative mirror servers when available.
 - Snapshot of 88 source titles displayed if the live source is unavailable.
 
@@ -40,3 +41,5 @@ The upstream domain, markup, availability and host policies can change. These ch
 ## Checks performed
 
 Live catalog retrieval, remote search, title details, video server discovery, image proxy, and pagination with newly discovered titles passed locally. Client/server JavaScript syntax checked. Browser regression checks passed for one-click player loading, delayed metadata, retry, poster clicks, detail-page playback, source errors, close-during-fetch, and mobile layout. The actual upstream player and direct HLS playback were verified.
+
+Quality controls verified with live 1080p playback, switching to 480p, retained position/volume/speed, paused switching, Auto selection, and mobile layout.
