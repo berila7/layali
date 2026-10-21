@@ -19,12 +19,13 @@ Open http://127.0.0.1:4173. After editing the source, run `npm run build` and re
 - Movies, series and anime filters, alphabetical/year sorting and title details.
 - My List stored in this browser's localStorage, with Arabic/RTL interface support.
 - No scripts, analytics, advertising frames or HTML from source pages are executed in the main interface.
-- Native video playback when the source exposes a direct MP4; otherwise Watch now automatically loads the first restricted third-party player.
+- Direct HLS playback when the public provider metadata exposes a compatible stream; native HLS or bundled hls.js handles playback without provider page/ad scripts.
+- Otherwise Watch now automatically loads a restricted third-party player, with alternative mirror servers when available.
 - Snapshot of 88 source titles displayed if the live source is unavailable.
 
 ## Playback limits
 
-The source currently supplies external embedded video servers. The iframe sandbox excludes pop-ups, downloads, forms, and top-page navigation. Providers can still show advertising within their own iframe and may refuse sandboxed playback. This is **not a guarantee of completely ad-free video**. No DRM or provider access protections are bypassed. The live provider player loads in browser checks. Provider playback availability can vary.
+The source supplies external video servers. Where compatible public stream metadata is available, the app plays the video directly without executing provider scripts. The iframe sandbox excludes pop-ups, downloads, forms, and top-page navigation. Providers can still show advertising within their own iframe and may refuse sandboxed playback. This is **not a guarantee of completely ad-free video**. No DRM or provider access protections are bypassed. Direct playback of the spotlight film was verified in Chromium: currentTime advanced past one second, readyState was 4, paused was false, and no media error occurred. Provider availability can vary.
 
 The upstream domain, markup, availability and host policies can change. These changes may require scraper maintenance. Watchlist storage is per browser; it is not synced between devices.
 
@@ -38,4 +39,4 @@ The upstream domain, markup, availability and host policies can change. These ch
 
 ## Checks performed
 
-Live catalog retrieval, remote search, title details, video server discovery, image proxy, and pagination with newly discovered titles passed locally. Client/server JavaScript syntax checked. Browser regression checks passed for one-click player loading, delayed metadata, retry, poster clicks, detail-page playback, source errors, close-during-fetch, and mobile layout. The actual upstream player was visually verified to load.
+Live catalog retrieval, remote search, title details, video server discovery, image proxy, and pagination with newly discovered titles passed locally. Client/server JavaScript syntax checked. Browser regression checks passed for one-click player loading, delayed metadata, retry, poster clicks, detail-page playback, source errors, close-during-fetch, and mobile layout. The actual upstream player and direct HLS playback were verified.
