@@ -40,3 +40,9 @@ test('signed chunk requests preserve Range and partial response headers',async()
 test('proxy endpoints and title lookup reject arbitrary upstream URLs',async()=>{
  await withFetch(async()=>{throw Error('Must not make upstream request')},async()=>{for(const path of ['/api/detail?path=https://example.com/','/api/subtitle?url=https://example.com/file.srt']){const r=await worker.fetch(new Request('http://localhost'+path));assert.equal(r.status,502)}});
 });
+test('browser-discovered sources are validated and signed without a second upstream source lookup',async()=>{
+ await withFetch(async()=>{assert.fail('No upstream metadata lookup is needed')},async()=>{
+  const r=await worker.fetch(new Request('http://localhost/api/prepare',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({sources:[{quality:'1080p',url:'https://moon.zenoak.top/video/index.m3u8'},{quality:'malicious',url:'https://untrusted.example/file.m3u8'}],subtitles:[{language:'en',display:'English',url:'https://subtitles.vidy.st/download?id=en'},{language:'ar',display:'Arabic',url:'https://subtitles.vidy.st/download?id=ar'}]})}),env);
+  assert.equal(r.status,200);const d=await r.json();assert.equal(d.sources.length,1);assert.equal(d.sources[0].height,1080);assert.ok(await authorizedMediaURL(new URL('http://localhost'+d.sources[0].url).searchParams,secret));assert.equal(d.subtitles[0].language,'ar');
+ });
+});

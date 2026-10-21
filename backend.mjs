@@ -15,6 +15,16 @@ if(!stream)throw Error('No playable video source');const sources=(await Promise.
 const data={sources,subtitles,title:d.title};if(sourceCache.size>60)sourceCache.clear();sourceCache.set(key,{data,expires:Date.now()+180000});return data}
 function srtToVtt(s){return s.replace(/^\uFEFF/,'').startsWith('WEBVTT')?s:'WEBVTT\n\n'+s.replace(/^\uFEFF/,'').replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g,'$1.$2')}
 export default {async fetch(request,env={}){const u=new URL(request.url);try{const secret=env.MEDIA_PROXY_SECRET||(['localhost','127.0.0.1','local'].includes(u.hostname)?(localMediaSecret??=crypto.randomUUID()):null);
+if(u.pathname==='/assets/movy-codec.js')return new Response(MOVY_CODEC_SCRIPT,{headers:{'content-type':'text/javascript','cache-control':'public,max-age=86400'}});
+if(u.pathname==='/api/prepare'){
+ if(request.method!=='POST')return json({error:'Method not allowed'},405);
+ if(!secret)throw Error('Media signing is not configured');
+ const body=await request.json();
+ const sources=(await Promise.all((Array.isArray(body.sources)?body.sources:[]).slice(0,30).filter(s=>{try{mediaURL(s.url);return true}catch{return false}}).map(async s=>({label:String(s.quality||'Original').slice(0,40),height:parseInt(s.quality)||0,url:await signedMediaURL(s.url,secret),format:'hls'})))).sort((a,b)=>b.height-a.height);
+ if(!sources.length)throw Error('No supported source');
+ const subtitles=(Array.isArray(body.subtitles)?body.subtitles:[]).filter(s=>s.url?.startsWith('https://subtitles.vidy.st/download?')).sort((a,b)=>(b.language==='ar')-(a.language==='ar')||Number(b.isTrusted)-Number(a.isTrusted)||Number(b.downloadCount||0)-Number(a.downloadCount||0)).slice(0,60).map(s=>({language:String(s.language||''),label:String(s.display||s.language||''),release:String(s.release||''),url:'/api/subtitle?url='+encodeURIComponent(s.url)}));
+ return json({sources,subtitles});
+}
 if(u.pathname==='/assets/hls.min.js')return new Response(HLS_LIBRARY,{headers:{'content-type':'text/javascript','cache-control':'public,max-age=86400'}});
 if(u.pathname==='/api/home'){const d=await pageData('/');delete d.messages;return json(d)}
 if(u.pathname==='/api/search'){const q=(u.searchParams.get('q')||'').slice(0,100),type=u.searchParams.get('type');const path=q?'/search/multi':'/discover/'+(type==='tv'?'tv':'movie');const params=new URLSearchParams({query:q,page:String(Math.max(1,parseInt(u.searchParams.get('page'))||1)),language:'en',sort_by:'popularity.desc'});if(type==='anime')params.set('with_genres','16');if(/^\d+$/.test(u.searchParams.get('genre')||''))params.set('with_genres',u.searchParams.get('genre'));return json(await(await upstream(DB+path+'?'+params)).json())}
@@ -44,5 +54,5 @@ if(u.pathname==='/api/media'){
  for(const key of ['content-range','content-length'])if(r.headers.get(key))out[key]=r.headers.get(key);
  return new Response(r.body,{status:r.status,headers:out});
 }
-if(u.pathname!=='/')return new Response('Not found',{status:404});return new Response(PAGE,{headers:{'content-type':'text/html; charset=utf-8','referrer-policy':'no-referrer','x-content-type-options':'nosniff','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://wsrv.nl https://image.tmdb.org data:; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'none'"}})
+if(u.pathname!=='/')return new Response('Not found',{status:404});return new Response(PAGE,{headers:{'content-type':'text/html; charset=utf-8','referrer-policy':'no-referrer','x-content-type-options':'nosniff','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://wsrv.nl https://image.tmdb.org data:; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'self' https://api.wecollege.net https://subtitles.vidy.st; frame-src 'none'; object-src 'none'; base-uri 'none'"}})
 }catch(error){console.error('Request failed',u.pathname,error.name,String(error.message).replace(/https?:\/\/\S+/g,'[upstream]'));return json({error:'The source is currently unavailable. Please retry or choose another title.'},502)}}};

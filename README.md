@@ -49,3 +49,5 @@ Additional checks: 4K → 720p switching preserved playback time, volume, speed 
 Media links carry expiring HMAC grants scoped to the video CDN origin. Each trusted playlist's initialization files, child playlists and video chunks receive grants for their actual origins, so new provider CDNs do not require additions to a fixed hostname list. Altered hosts and expired/unsigned grants are rejected. Range requests and partial responses remain supported.
 
 The player has a bounded stall timer with automatic quality fallback in Best available mode. Manually selected qualities show a retry message on failure.
+
+Playback discovery now runs through the provider's normal public browser endpoints, avoiding shared-server source-discovery rate limits. `/api/prepare` validates the resulting CDN URLs and issues server-signed proxy grants. The source transport codec is served locally; advertising/player page scripts are still excluded. Hosted outbound requests use an AbortController-based timeout compatible with the production runtime.
