@@ -183,9 +183,10 @@ async function playSelected() {
     const d = await requestJSON('/api/play?url=' + encodeURIComponent(x.url));
     if (!current()) return;
     $('#player').replaceChildren();
+    const compatibleServers = (d.servers || []).filter(s => s.driver === 'streamruby' || /^streamruby(?:\s|$)/i.test(s.name || ''));
     if (d.media) {
       directVideo(d, current);
-    } else if (d.servers?.length) {
+    } else if (compatibleServers.length) {
       const status = document.createElement('p');
       status.className = 'notice';
       status.setAttribute('role', 'status');
@@ -212,7 +213,7 @@ async function playSelected() {
           if (current()) status.textContent = t('The provider is taking too long. Try Retry player or another title.', 'استغرق الخادم وقتًا طويلًا. أعد تحميل المشغل أو جرّب عنوانًا آخر.');
         }, 18000);
       };
-      for (const [i, server] of d.servers.entries()) {
+      for (const [i, server] of compatibleServers.entries()) {
         const b = document.createElement('button');
         b.textContent = server.name || 'Server ' + (i + 1);
         b.onclick = () => loadServer(server, b);
@@ -221,7 +222,7 @@ async function playSelected() {
       // A Play click must actually mount and load the player.
       controls.firstElementChild.click();
     } else {
-      $('#player').innerHTML = '<p class="notice" role="alert">' + t('No playable server is available for this title. Try another episode or title.', 'لا يتوفر خادم مشاهدة لهذا العنوان. جرّب حلقة أو عنوانًا آخر.') + '</p>';
+      $('#player').innerHTML = '<p class="notice" role="alert">' + t('No compatible video source is available for this title right now. Other providers require pop-ups or reject protected playback. Try another episode or title.', 'لا يتوفر مصدر فيديو متوافق لهذا العنوان حاليًا. الخوادم الأخرى ترفض المشاهدة المحمية. جرّب حلقة أو عنوانًا آخر.') + '</p>';
     }
   } catch {
     if (current()) $('#player').innerHTML = '<p class="notice" role="alert">' + t('Could not reach the video source. Use Retry player to try again.', 'تعذر الاتصال بمصدر الفيديو. أعد تحميل المشغل للمحاولة مجددًا.') + '</p>';
