@@ -2,9 +2,11 @@ const MOVY='https://www.movy.sx', STREAM='https://api.wecollege.net', DB='https:
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'private,max-age=60','x-content-type-options':'nosniff'}});
 async function upstream(url,options={}) {
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),18000);
- try{const r=await fetch(url,{signal:controller.signal,redirect:'manual',...options});if(!r.ok)throw Error('Upstream unavailable: '+r.status);return r}finally{clearTimeout(timer)}
+ try{const r=await fetch(url,{signal:controller.signal,redirect:'manual',...options});if(!r.ok)throw Error('Upstream unavailable: '+r.status+' at '+new URL(url).hostname+new URL(url).pathname.slice(0,70));return r}finally{clearTimeout(timer)}
 }
-async function pageData(path){const html=await(await upstream(MOVY+path)).text();const m=html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);if(!m)throw Error('Catalog markup unavailable');return JSON.parse(m[1]).props.pageProps}
+const pageCache=new Map();
+async function pageData(path){const cached=pageCache.get(path);if(cached&&cached.expires>Date.now())return cached.data;const html=await(await upstream(MOVY+path)).text();const m=html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);if(!m)throw Error('Catalog markup unavailable');const data=JSON.parse(m[1]).props.pageProps;if(pageCache.size>100)pageCache.clear();pageCache.set(path,{data,expires:Date.now()+90000});return data}
+
 function titlePath(raw){if(!/^\/(movie|tv)\/\d+$/.test(raw||''))throw Error('Invalid title');return raw}
 function mediaURL(raw){const u=new URL(raw);if(u.protocol!=='https:'||u.username||u.password||!['zenoak.top','paleoak.top','greenkite.top','limedisk.top'].some(h=>u.hostname===h||u.hostname.endsWith('.'+h)))throw Error('Unsupported media host');return u}
 const sourceCache=new Map();
