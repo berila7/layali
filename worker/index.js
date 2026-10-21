@@ -24,7 +24,10 @@ async function authorizedMediaURL(params,secret){
 ;
 const MOVY='https://www.movy.sx', STREAM='https://api.wecollege.net', DB='https://db.wecollege.net/3';
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'private,max-age=60','x-content-type-options':'nosniff'}});
-async function upstream(url,options={}) {const r=await fetch(url,{signal:AbortSignal.timeout(18000),redirect:'error',...options});if(!r.ok)throw Error('Upstream unavailable: '+r.status);return r}
+async function upstream(url,options={}) {
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),18000);
+ try{const r=await fetch(url,{signal:controller.signal,redirect:'manual',...options});if(!r.ok)throw Error('Upstream unavailable: '+r.status);return r}finally{clearTimeout(timer)}
+}
 async function pageData(path){const html=await(await upstream(MOVY+path)).text();const m=html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);if(!m)throw Error('Catalog markup unavailable');return JSON.parse(m[1]).props.pageProps}
 function titlePath(raw){if(!/^\/(movie|tv)\/\d+$/.test(raw||''))throw Error('Invalid title');return raw}
 function mediaURL(raw){const u=new URL(raw);if(u.protocol!=='https:'||u.username||u.password||!['zenoak.top','paleoak.top','greenkite.top','limedisk.top'].some(h=>u.hostname===h||u.hostname.endsWith('.'+h)))throw Error('Unsupported media host');return u}
@@ -64,4 +67,4 @@ if(u.pathname==='/api/media'){
  return new Response(r.body,{status:r.status,headers:out});
 }
 if(u.pathname!=='/')return new Response('Not found',{status:404});return new Response(PAGE,{headers:{'content-type':'text/html; charset=utf-8','referrer-policy':'no-referrer','x-content-type-options':'nosniff','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://wsrv.nl https://image.tmdb.org data:; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'none'"}})
-}catch(error){return json({error:'The source is currently unavailable. Please retry or choose another title.'},502)}}};
+}catch(error){console.error('Request failed',u.pathname,error.name,String(error.message).replace(/https?:\/\/\S+/g,'[upstream]'));return json({error:'The source is currently unavailable. Please retry or choose another title.'},502)}}};
