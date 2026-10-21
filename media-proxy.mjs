@@ -1,4 +1,4 @@
-const localMediaSecret=crypto.randomUUID();
+let localMediaSecret;
 const signingKeys=new Map();
 async function mediaKey(secret){if(!signingKeys.has(secret))signingKeys.set(secret,crypto.subtle.importKey('raw',new TextEncoder().encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign','verify']));return signingKeys.get(secret)}
 function publicMediaURL(raw){const u=new URL(raw);if(u.protocol!=='https:'||u.username||u.password||u.port||!u.hostname.includes('.')||/^[\d.]+$/.test(u.hostname)||u.hostname.includes(':')||/\.(local|internal|localhost)$/.test(u.hostname))throw Error('Invalid media URL');return u}
