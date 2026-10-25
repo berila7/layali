@@ -34,7 +34,24 @@ async function resolveStreamRuby(server) {
   return publicHTTPS(media) && /\.streamruby\.net$/.test(new URL(media).hostname) ? media : null;
 }
 async function playback(target) {
-  const html = await source(target, true);
+  let html = await source(target, true);
+  // New source pages link to a separate watch page; older pages contain servers inline.
+  // Follow only the selected title's same-origin watch URL, never arbitrary page links.
+  const titleURL = sourceURL(target);
+  const watchURL = new URL(titleURL.href);
+  watchURL.pathname = titleURL.pathname.replace(/\/$/, '') + '/watch/';
+  watchURL.search = '';
+  watchURL.hash = '';
+  for (const match of html.matchAll(/<a\b([^>]*)>/gi)) {
+    const href = attr(match[1], 'href');
+    if (!href) continue;
+    let link;
+    try { link = new URL(href, titleURL); } catch { continue; }
+    if (link.href === watchURL.href) {
+      html = await source(watchURL.href);
+      break;
+    }
+  }
   const servers = [];
   for (const match of html.matchAll(/<li\b([^>]*\bdata-link\s*=\s*["'][^"']+["'][^>]*)>([\s\S]*?)<\/li>/gi)) {
     const url = attr(match[1], 'data-link');

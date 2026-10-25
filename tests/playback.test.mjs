@@ -40,3 +40,33 @@ test('retains Ruby iframe fallback if its direct stream cannot be resolved', asy
   assert.equal(data.media, null);
   assert.deepEqual(data.servers.map(s => s.name), ['StreamRuby']);
 });
+
+test('follows the title watch page to discover current source servers', async () => {
+  const watch = source + 'watch/';
+  const {data, calls} = await requestWith({
+    [source]: '<div class="watchNow"><a href="' + watch + '">Watch</a></div>',
+    [watch]: sourceRows + rubyRow,
+    [ruby]: packed,
+  });
+  assert.equal(data.media, media);
+  assert.equal(data.format, 'hls');
+  assert.deepEqual(calls, [source, watch, ruby]);
+});
+test('supports relative watch links without following unrelated or external titles', async () => {
+  const watch = source + 'watch/';
+  const {data, calls} = await requestWith({
+    [source]: '<a href="https://other.example/test-title/watch/">Ad</a>' +
+      '<a href="/another-title/watch/">Related</a><a href="watch/">Watch</a>',
+    [watch]: rubyRow,
+    [ruby]: packed,
+  });
+  assert.equal(data.media, media);
+  assert.deepEqual(calls, [source, watch, ruby]);
+});
+test('never follows an external watch link when no same-title link exists', async () => {
+  const {data, calls} = await requestWith({
+    [source]: '<a href="https://other.example/test-title/watch/">Watch</a>' + sourceRows,
+  });
+  assert.equal(data.media, null);
+  assert.deepEqual(calls, [source]);
+});
