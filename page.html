@@ -35,29 +35,65 @@ dialog{background:#171c19;border-color:#ffffff20;border-radius:16px}.modal-art:a
 @media(max-width:1000px){header{gap:24px}nav button{padding:0 10px}.tools{gap:12px}.hero{padding:44px 5%;height:490px}.shelf{grid-auto-columns:calc((100% - 54px)/4)}.hero-copy{max-width:400px}}
 @media(max-width:650px){header{height:104px;padding:15px 5%;align-content:start;gap:12px}.logo,.logo span{font-size:20px}.tools{gap:13px}.avatar{width:30px;height:30px}nav{top:60px;inset-inline:5%;height:34px;gap:3px;justify-content:space-between}nav button{font-size:11px;padding:0 9px;height:32px}.hero{margin:122px 4% 64px;height:490px;padding:36px 24px;align-items:flex-end;border-radius:14px}.hero-art{inset:0;opacity:.45}.hero:after,[dir=rtl] .hero:after{background:linear-gradient(0deg,#151b19 4%,#151b19d9 42%,#151b1930)}.hero-copy{max-width:100%;padding-bottom:22px}h1{font-size:43px;letter-spacing:-1.8px}.eyebrow{font-size:9px;letter-spacing:2px}.description{font-size:12px;margin:16px 0 22px}.hero-foot{bottom:19px;right:24px;font-size:7px;gap:9px}.hero-foot:before{width:20px}.hero-foot b{font-size:10px}.actions{gap:8px}.btn{padding:11px 14px}.browse-bar{overflow:visible;gap:2px;padding-bottom:20px;row-gap:16px}.chip{padding:9px 13px;font-size:11px}.browse-bar>.native-select-wrapper{flex-basis:100%;margin:0}.browse-bar select{display:block;min-width:0}.main{padding-inline:5%}.shelf{grid-auto-columns:calc((100% - 24px)/2.4);gap:12px}h2{font-size:18px}.sub{font-size:11px}.section-head{gap:12px}.status{padding:6px 8px;font-size:9px;flex-shrink:0}.quiet-banner{padding:17px;gap:13px}.quiet-banner svg{flex-shrink:0}.quiet-banner p{font-size:10px}.search-box{padding-top:125px}.quality-status{width:100%}.quality-bar .native-select-wrapper{max-width:100%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+.source-control{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap}.source-control>span:first-child{font-size:12px;color:var(--muted)}#source-notice{margin:16px 0}#source-notice button{margin-inline-start:12px}.browse-bar{flex-wrap:wrap}
 </style></head><body>
 <header><a class="logo" href="/" aria-label="Layali home"><span>L</span>AYALI</a><nav aria-label="Main navigation"><button data-nav="home" class="active" data-en="Discover" data-ar="اكتشف">Discover</button><button data-nav="movies" data-en="Movies" data-ar="أفلام">Movies</button><button data-nav="series" data-en="TV Shows" data-ar="مسلسلات">TV Shows</button><button data-nav="anime" data-en="Anime" data-ar="أنمي">Anime</button><button data-nav="list" data-en="My List" data-ar="قائمتي">My List</button></nav><div class="tools"><button class="icon" id="search-toggle" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16 16 5 5"/></svg></button><button class="language" id="language">العربية</button><button class="avatar" id="profile" title="Your library">M</button></div></header>
 <div class="search-box" id="search-box"><input id="search" placeholder="Search movies, series, anime…" aria-label="Search the catalog"></div>
 <section class="hero" id="hero"><div class="hero-art" id="hero-art"></div><div class="hero-copy"><div class="eyebrow"><i></i><span data-en="TONIGHT’S SPOTLIGHT" data-ar="اختيار الليلة">TONIGHT’S SPOTLIGHT</span></div><h1>PROJECT<br>HAIL MARY</h1><div class="meta"><span class="accent" data-en="Featured film" data-ar="فيلم مميز">Featured film</span><span>2026</span><span class="tag">HD</span><span data-en="Sci-fi · Adventure" data-ar="خيال علمي · مغامرة">Sci-fi · Adventure</span></div><p class="description" data-en="One astronaut. An impossible mission. A journey across the stars to save everything he’s ever known." data-ar="رائد فضاء واحد. مهمة مستحيلة. رحلة بين النجوم لإنقاذ كل ما عرفه يومًا.">One astronaut. An impossible mission. A journey across the stars to save everything he’s ever known.</p><div class="actions"><button class="btn primary" id="hero-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m7 3 15 9-15 9z"/></svg><span data-en="Watch now" data-ar="شاهد الآن">Watch now</span></button><button class="btn" id="hero-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-11v2"/></svg><span data-en="More info" data-ar="التفاصيل">More info</span></button><button class="round" id="hero-save" aria-label="Add spotlight to My List">+</button></div></div><div class="hero-foot"><b>01</b> / 05 <span data-en="A LITTLE ESCAPE, EVERY NIGHT" data-ar="كل ليلة، حكاية جديدة">A LITTLE ESCAPE, EVERY NIGHT</span></div></section>
-<main class="main"><div class="browse-bar"><button class="chip selected" data-filter="all" data-en="For you" data-ar="من أجلك">For you</button><button class="chip" data-filter="movies" data-en="Movies" data-ar="أفلام">Movies</button><button class="chip" data-filter="series" data-en="TV Shows" data-ar="مسلسلات">TV Shows</button><button class="chip" data-filter="anime" data-en="Anime" data-ar="أنمي">Anime</button><div class="native-select-wrapper" data-slot="native-select-wrapper"><select data-slot="native-select" id="sort" aria-label="Sort catalog"><option value="recent">Recently added</option><option value="az">Title: A–Z</option><option value="year">Release year</option></select><svg class="native-select-icon" data-slot="native-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div></div><div class="section-head"><div><h2 id="page-heading">Fresh from the screen</h2><p class="sub" id="page-subtitle">Your next great watch starts here.</p></div><div class="status" id="sync-status"><i></i>Catalog snapshot</div></div><div id="content"></div><div class="quiet-banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m12 2 8 4v6c0 6-8 10-8 10S4 18 4 12V6z"/><path d="m8 12 3 3 5-6"/></svg><div><strong data-en="Just you and a good story." data-ar="أنت وحكاية تستحق المشاهدة.">Just you and a good story.</strong><p data-en="A quiet library. No source-page ads, pop-ups, or tracking scripts." data-ar="مكتبة هادئة، دون إعلانات الصفحة الأصلية أو نوافذها المنبثقة.">A quiet library. No source-page ads, pop-ups, or tracking scripts.</p></div><span class="small-label">YOUR PERSONAL CINEMA</span></div><div id="secondary"></div><div id="load-area" class="hidden" style="text-align:center;margin:25px"><button class="btn" id="load-more">Load more</button></div><footer><a class="logo" href="/">LAYALI</a><span data-en="Made for your movie nights." data-ar="صُنع لليالي السينما الخاصة بك.">Made for your movie nights.</span><span>Catalog from EgyDead · Personal library</span></footer></main>
-<dialog id="details" aria-label="Title details"><div class="modal-art" id="modal-art"><button class="close" id="close" aria-label="Close">×</button></div><div class="modal-body"><h2 id="detail-title"></h2><div class="player" id="player"></div><div class="meta" id="detail-meta"></div><p id="detail-story"></p><div class="actions"><button class="btn primary" id="detail-play">▶ &nbsp; Watch now</button><button class="btn" id="detail-save">＋ My List</button></div><div class="server-buttons" id="episodes"></div></div></dialog><div id="toast" class="toast hidden" role="status"></div>
+<main class="main"><div class="browse-bar"><label class="source-control"><span data-en="Source" data-ar="المصدر">Source</span><span class="native-select-wrapper"><select id="catalog-source" aria-label="Catalog source"><option value="egydead">EgyDead</option><option value="topcinema">TopCinema · توب سينما</option></select><svg class="native-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></label><button class="chip selected" data-filter="all" data-en="For you" data-ar="من أجلك">For you</button><button class="chip" data-filter="movies" data-en="Movies" data-ar="أفلام">Movies</button><button class="chip" data-filter="series" data-en="TV Shows" data-ar="مسلسلات">TV Shows</button><button class="chip" data-filter="anime" data-en="Anime" data-ar="أنمي">Anime</button><div class="native-select-wrapper" data-slot="native-select-wrapper"><select data-slot="native-select" id="sort" aria-label="Sort catalog"><option value="recent">Recently added</option><option value="az">Title: A–Z</option><option value="year">Release year</option></select><svg class="native-select-icon" data-slot="native-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div></div><div class="section-head"><div><h2 id="page-heading">Fresh from the screen</h2><p class="sub" id="page-subtitle">Your next great watch starts here.</p></div><div class="status" id="sync-status"><i></i>Catalog snapshot</div></div><div id="source-notice" class="notice hidden" role="status"></div><div id="content"></div><div class="quiet-banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m12 2 8 4v6c0 6-8 10-8 10S4 18 4 12V6z"/><path d="m8 12 3 3 5-6"/></svg><div><strong data-en="Just you and a good story." data-ar="أنت وحكاية تستحق المشاهدة.">Just you and a good story.</strong><p data-en="A quiet library. No source-page ads, pop-ups, or tracking scripts." data-ar="مكتبة هادئة، دون إعلانات الصفحة الأصلية أو نوافذها المنبثقة.">A quiet library. No source-page ads, pop-ups, or tracking scripts.</p></div><span class="small-label">YOUR PERSONAL CINEMA</span></div><div id="secondary"></div><div id="load-area" class="hidden" style="text-align:center;margin:25px"><button class="btn" id="load-more">Load more</button></div><footer><a class="logo" href="/">LAYALI</a><span data-en="Made for your movie nights." data-ar="صُنع لليالي السينما الخاصة بك.">Made for your movie nights.</span><span id="source-credit">Catalog from EgyDead · Personal library</span></footer></main>
+<dialog id="details" aria-label="Title details"><div class="modal-art" id="modal-art"><button class="close" id="close" aria-label="Close">×</button></div><div class="modal-body"><h2 id="detail-title"></h2><p id="playback-source" class="sub" role="status"></p><div class="server-buttons" id="mirror-controls" aria-label="Video servers"></div><div class="player" id="player"></div><div class="meta" id="detail-meta"></div><p id="detail-story"></p><div class="actions"><button class="btn primary" id="detail-play">▶ &nbsp; Watch now</button><button class="btn" id="detail-save">＋ My List</button></div><details class="alternate-source" style="margin-top:20px"><summary data-en="Search another site" data-ar="البحث في موقع آخر">Search another site</summary><p class="sub" data-en="This searches another catalog. It does not change the video playing above." data-ar="هذا يبحث في مكتبة أخرى ولا يغيّر مصدر الفيديو أعلاه.">This searches another catalog. It does not change the video playing above.</p><button class="btn" id="find-source"></button></details><div class="server-buttons" id="episodes"></div></div></dialog><div id="toast" class="toast hidden" role="status"></div>
 <script src="/assets/hls.min.js"></script><script>
 const SEED=__SEED__;const $=s=>document.querySelector(s);let catalog=SEED,view='home',filter='all',lang='en',page=1,selected=null,live=false,searchTimer;let saved=[];try{saved=JSON.parse(localStorage.getItem('layali-list')||'[]');if(!Array.isArray(saved))saved=[];lang=localStorage.getItem('layali-lang')||'en'}catch{}const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const img=u=>'/api/image?url='+encodeURIComponent(u);const spotlight=SEED.find(x=>x.title.includes('Project Hail Mary'))||SEED[0];$('#hero-art').style.backgroundImage='url("'+img(spotlight.image)+'")';const t=(en,ar)=>lang==='ar'?ar:en;const types={movies:['Movie','فيلم'],series:['TV Show','مسلسل'],anime:['Anime','أنمي']};const isSaved=x=>saved.some(a=>a.url===x.url);
+const sourceNames={egydead:'EgyDead',topcinema:'TopCinema'};
+let catalogSource='egydead',catalogRequest=0,sourceFailure=null;
+try{const preference=localStorage.getItem('layali-source');if(preference==='fasel')catalogSource='topcinema';else if(['egydead','topcinema'].includes(preference))catalogSource=preference}catch{}
+if(catalogSource!=='egydead')catalog=[];
+$('#catalog-source').value=catalogSource;
+const itemSource=x=>x?.source||(x?.url?.startsWith('https://topcinema.film/')?'topcinema':'egydead');
+function sourceNotice(){
+ const box=$('#source-notice');box.replaceChildren();box.classList.toggle('hidden',!sourceFailure);
+ if(!sourceFailure)return;
+ const message=document.createElement('span');message.textContent=sourceNames[catalogSource]+': '+(sourceFailure==='source_verification'?t('The site requires verification and is blocking catalog access. Choose another source or retry later.','الموقع يتطلب التحقق ويمنع جلب المكتبة. اختر مصدرًا آخر أو حاول لاحقًا.'):t('Could not load this source. Choose another source or retry.','تعذّر تحميل هذا المصدر. اختر مصدرًا آخر أو أعد المحاولة.'));
+ const retry=document.createElement('button');retry.className='btn';retry.textContent=t('Retry','إعادة المحاولة');retry.onclick=()=>refresh();box.append(message,retry);
+}
+async function chooseSource(id,query=''){
+ catalogRequest++;clearTimeout(searchTimer);catalogSource=id;page=1;live=false;sourceFailure=null;catalog=id==='egydead'&&!query?SEED:[];
+ try{localStorage.setItem('layali-source',id)}catch{}
+ $('#catalog-source').value=id;$('#search').value=query;$('#search-box').classList.toggle('open',!!query);view='home';filter='all';render();await refresh();
+}
+$('#catalog-source').onchange=e=>chooseSource(e.target.value,$('#search').value.trim());
+$('#find-source').onclick=()=>{if(!selected)return;const query=(selected.title||'').replace(/^(فيلم|مسلسل|انمي|مشاهدة)\s*/,'').trim();const id=itemSource(selected)==='egydead'?'topcinema':'egydead';$('#details').close();void chooseSource(id,query);window.scrollTo({top:0,behavior:'smooth'})};
 function toast(s){$('#toast').textContent=s;$('#toast').classList.remove('hidden');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('#toast').classList.add('hidden'),2500)}
 function save(x){if(isSaved(x))saved=saved.filter(a=>a.url!==x.url);else saved.push(x);try{localStorage.setItem('layali-list',JSON.stringify(saved))}catch{toast(t('Browser storage is unavailable.','التخزين غير متاح.'))}render();if(selected)$('#detail-save').textContent=isSaved(selected)?'✓ '+t('In My List','في قائمتي'):'＋ '+t('My List','قائمتي');toast(isSaved(x)?t('Added to My List','تمت الإضافة إلى قائمتي'):t('Removed from My List','تمت الإزالة من قائمتي'))}
-function card(x){return '<article class="card"><button class="poster" data-open="'+esc(x.url)+'" aria-label="'+esc(x.title)+'"><img src="'+img(x.image)+'" alt="'+esc(x.title)+'" loading="lazy" onerror="this.style.opacity=.15"><span class="badge">'+(x.type==='series'?'SERIES':x.type==='anime'?'ANIME':'FILM')+'</span><span class="play-overlay">▶</span></button><button class="save-card '+(isSaved(x)?'saved':'')+'" data-save="'+esc(x.url)+'" aria-label="'+(isSaved(x)?'Remove from':'Add to')+' My List">'+(isSaved(x)?'✓':'+')+'</button><h3 title="'+esc(x.title)+'">'+esc(x.title)+'</h3><div class="card-info"><span>'+esc(x.year||'—')+'</span><span>·</span><span>'+t(...types[x.type])+'</span><span>·</span><span>'+t('Subtitled','مترجم')+'</span></div></article>'}
+function card(x){return '<article class="card"><button class="poster" data-open="'+esc(x.url)+'" aria-label="'+esc(x.title)+'"><img src="'+img(x.image)+'" alt="'+esc(x.title)+'" loading="lazy" onerror="this.style.opacity=.15"><span class="badge">'+(x.type==='series'?'SERIES':x.type==='anime'?'ANIME':'FILM')+'</span><span class="play-overlay">▶</span></button><button class="save-card '+(isSaved(x)?'saved':'')+'" data-save="'+esc(x.url)+'" aria-label="'+(isSaved(x)?'Remove from':'Add to')+' My List">'+(isSaved(x)?'✓':'+')+'</button><h3 title="'+esc(x.title)+'">'+esc(x.title)+'</h3><div class="card-info"><span>'+esc(x.year||'—')+'</span><span>·</span><span>'+t(...types[x.type])+'</span><span>·</span><span>'+esc(sourceNames[itemSource(x)]||t('Previous source','مصدر سابق'))+'</span></div></article>'}
 function section(title,sub,items,id){return '<section class="section"><div class="section-head"><div><h2>'+title+'</h2><p class="sub">'+sub+'</p></div><div class="section-actions"><button class="view" data-category="'+id+'">'+t('View all','عرض الكل')+' ↗</button><button data-scroll="'+id+'" data-dir="-1" aria-label="Previous titles">‹</button><button data-scroll="'+id+'" data-dir="1" aria-label="Next titles">›</button></div></div><div class="shelf" id="shelf-'+id+'">'+items.map(card).join('')+'</div></section>'}
-function render(){let items=view==='list'?saved:catalog;let cat=view==='home'?filter:view;if(cat!=='all'&&cat!=='home'&&cat!=='list')items=items.filter(x=>x.type===cat);let q=$('#search').value.trim().toLowerCase();if(q)items=items.filter(x=>(x.originalTitle+' '+x.title).toLowerCase().includes(q));items=[...items];if($('#sort').value==='az')items.sort((a,b)=>a.title.localeCompare(b.title));if($('#sort').value==='year')items.sort((a,b)=>(b.year||0)-(a.year||0));const home=view==='home'&&filter==='all'&&!q;$('#hero').classList.toggle('hidden',!home);$('.main').style.marginTop=home?'-38px':'0';if(!home&&!$('#search-box').classList.contains('open'))$('.main').style.paddingTop='135px';else $('.main').style.paddingTop='0';$('#page-heading').textContent=q?t('Search results','نتائج البحث'):view==='list'?t('My List','قائمتي'):home?t('Fresh from the screen','أحدث الإضافات'):t(...(types[cat]||['Discover','اكتشف']));$('#page-subtitle').textContent=home?t('Your next great watch starts here.','مشاهدتك الرائعة التالية تبدأ هنا.'):items.length+' '+t('titles in your library','عنوانًا في مكتبتك');$('#content').className=home?'shelf':'grid';$('#content').innerHTML=items.length?(home?items.slice(5,23):items).map(card).join(''):'<div class="empty">'+t(view==='list'?'Your movie night starts with a list. Tap + on a title to save it.':'No titles found. Try another search.','لا توجد عناوين. أضف إلى قائمتك أو جرّب بحثًا آخر.')+'</div>';$('#secondary').innerHTML=home?section(t('Worth staying in for','تستحق ليلة في المنزل'),t('Big stories. A little escape.','حكايات كبيرة. وهروب صغير.'),catalog.filter(x=>x.type==='movies'),'movies')+section(t('One more episode','حلقة أخرى فقط'),t('Find your next obsession.','اكتشف مسلسلك المفضل القادم.'),catalog.filter(x=>x.type==='series'),'series')+section(t('A world beyond ordinary','عالم خارج المألوف'),t('Anime and animation, all in one place.','الأنمي والرسوم المتحركة في مكان واحد.'),catalog.filter(x=>x.type==='anime'),'anime'):'';$('#load-area').classList.toggle('hidden',view==='list'||!!q);document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('active',b.dataset.nav===view));document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('selected',b.dataset.filter===filter));$('#hero-save').textContent=isSaved(spotlight)?'✓':'+'}
-async function refresh(append=false){const b=$('#load-more');b.disabled=true;b.textContent=t('Loading…','جارٍ التحميل…');try{let u='/api/catalog?page='+page;let data=await fetch(u).then(r=>{if(!r.ok)throw Error();return r.json()});if(!data.items.length)throw Error();catalog=append?[...new Map([...catalog,...data.items].map(x=>[x.url,x])).values()]:data.items;live=true;$('#sync-status').innerHTML='<i></i>'+t('Catalog synced just now','تم تحديث المكتبة');render()}catch{$('#sync-status').textContent=t('Source unavailable · saved catalog','المصدر غير متاح · نسخة محفوظة');if(append){page--;toast(t('Could not load more. Please try again.','تعذّر تحميل المزيد. حاول مجددًا.'))}}finally{b.disabled=false;b.textContent=t('Load more','تحميل المزيد')}}
-function navigate(v){view=v;filter='all';$('#search').value='';$('#search-box').classList.remove('open');render();window.scrollTo({top:0,behavior:'smooth'})}
+function render(){let items=view==='list'?saved:catalog;let cat=view==='home'?filter:view;if(cat!=='all'&&cat!=='home'&&cat!=='list')items=items.filter(x=>x.type===cat);let q=$('#search').value.trim().toLowerCase();if(q)items=items.filter(x=>(x.originalTitle+' '+x.title).toLowerCase().includes(q));items=[...items];if($('#sort').value==='az')items.sort((a,b)=>a.title.localeCompare(b.title));if($('#sort').value==='year')items.sort((a,b)=>(b.year||0)-(a.year||0));const home=view==='home'&&filter==='all'&&!q;const hero=home&&catalogSource==='egydead'&&catalog.length>0;$('#hero').classList.toggle('hidden',!hero);$('.main').style.marginTop=hero?'-38px':'0';if(!hero&&!$('#search-box').classList.contains('open'))$('.main').style.paddingTop='135px';else $('.main').style.paddingTop='0';$('#page-heading').textContent=q?t('Search results','نتائج البحث'):view==='list'?t('My List','قائمتي'):home?t('Fresh from the screen','أحدث الإضافات'):t(...(types[cat]||['Discover','اكتشف']));$('#page-subtitle').textContent=home?t('Your next great watch starts here.','مشاهدتك الرائعة التالية تبدأ هنا.'):items.length+' '+t('titles in your library','عنوانًا في مكتبتك');$('#content').className=home?'shelf':'grid';$('#content').innerHTML=items.length?(home&&items.length>23?items.slice(5,23):items).map(card).join(''):'<div class="empty">'+t(view==='list'?'Your movie night starts with a list. Tap + on a title to save it.':'No titles found. Try another search.','لا توجد عناوين. أضف إلى قائمتك أو جرّب بحثًا آخر.')+'</div>';$('#secondary').innerHTML=home?section(t('Worth staying in for','تستحق ليلة في المنزل'),t('Big stories. A little escape.','حكايات كبيرة. وهروب صغير.'),catalog.filter(x=>x.type==='movies'),'movies')+section(t('One more episode','حلقة أخرى فقط'),t('Find your next obsession.','اكتشف مسلسلك المفضل القادم.'),catalog.filter(x=>x.type==='series'),'series')+section(t('A world beyond ordinary','عالم خارج المألوف'),t('Anime and animation, all in one place.','الأنمي والرسوم المتحركة في مكان واحد.'),catalog.filter(x=>x.type==='anime'),'anime'):'';$('#load-area').classList.toggle('hidden',view==='list'||!!q);document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('active',b.dataset.nav===view));document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('selected',b.dataset.filter===filter));$('#hero-save').textContent=isSaved(spotlight)?'✓':'+';$('#source-credit').textContent=t('Catalog from ','المكتبة من ')+sourceNames[catalogSource];sourceNotice()}
+async function refresh(append=false){
+ const id=++catalogRequest,site=catalogSource,q=$('#search').value.trim(),requestedPage=page,b=$('#load-more');b.disabled=true;b.textContent=t('Loading…','جارٍ التحميل…');sourceFailure=null;sourceNotice();$('#sync-status').textContent=sourceNames[site]+' · '+t('Loading…','جارٍ التحميل…');
+ try{
+  const response=await fetch('/api/catalog?source='+site+'&page='+requestedPage+'&q='+encodeURIComponent(q),{signal:AbortSignal.timeout(22000)});const data=await response.json();
+  if(id!==catalogRequest)return;
+  if(!response.ok)throw Object.assign(new Error(data.error),{code:data.code});
+  catalog=append?[...new Map([...catalog,...data.items].map(x=>[x.url,x])).values()]:data.items;live=true;
+  $('#sync-status').textContent=sourceNames[site]+' · '+t('Updated just now','تم التحديث');render();
+ }catch(error){
+  if(id!==catalogRequest)return;sourceFailure=error.code||'source_unavailable';
+  $('#sync-status').textContent=sourceNames[site]+' · '+t('Unavailable','غير متاح');
+  if(append)page=Math.max(1,page-1);render();
+ }finally{if(id===catalogRequest){b.disabled=false;b.textContent=t('Load more','تحميل المزيد')}}
+}
+function navigate(v){const searched=!!$('#search').value.trim();clearTimeout(searchTimer);catalogRequest++;view=v;filter='all';$('#search').value='';$('#search-box').classList.remove('open');render();window.scrollTo({top:0,behavior:'smooth'});if(searched){page=1;void refresh()}}
 let playbackRequest = 0;
+let selectedMirror=null;
 let hlsPlayer;
-function stopVideo(){if(hlsPlayer){hlsPlayer.destroy();hlsPlayer=null}}
+let videoLoadTimer;
+function stopVideo(){clearInterval(videoLoadTimer);videoLoadTimer=null;if(hlsPlayer){hlsPlayer.destroy();hlsPlayer=null}}
 let playerLoadTimer;
 async function requestJSON(url) {
   const response = await fetch(url, {signal: AbortSignal.timeout(22000)});
-  if (!response.ok) throw new Error('Source request failed');
-  return response.json();
+  const data=await response.json();
+  if (!response.ok) throw Object.assign(new Error(data.error||'Source request failed'),{code:data.code});
+  return data;
 }
 function focusPlayer() {
   $('#details').classList.add('playing');
@@ -67,10 +103,16 @@ async function openDetails(x, play = false) {
   if (!x) return;
   stopVideo();
   selected = x;
+  selectedMirror=null;
+  $('#mirror-controls').replaceChildren();
   playbackRequest++;
   clearTimeout(playerLoadTimer);
   $('#details').classList.remove('playing');
   $('#detail-title').textContent = x.title;
+  const otherSource=itemSource(x)==='egydead'?'topcinema':'egydead';
+  $('#find-source').textContent=t('Search ','البحث في ')+sourceNames[otherSource];
+  $('.alternate-source').open=false;
+  $('#playback-source').textContent=t('Video source: ','مصدر الفيديو: ')+(sourceNames[itemSource(x)]||t('Previous source','مصدر سابق'));
   $('#detail-meta').innerHTML = '<span>' + esc(x.year) + '</span><span>' + t(...types[x.type]) + '</span><span class="tag">' + t('Arabic subtitles', 'ترجمة عربية') + '</span>';
   $('#detail-story').textContent = t('Loading title details…', 'جارٍ تحميل التفاصيل…');
   $('#modal-art').style.backgroundImage = 'url("' + img(x.image) + '")';
@@ -140,9 +182,10 @@ function addQualityPicker(video, variants, apply, current) {
   video.after(bar);
   choose();
 }
+const streamURL = raw => '/api/stream?url=' + encodeURIComponent(raw);
 async function nativeQualityPicker(video, master, current) {
   try {
-    const response = await fetch(master, {signal: AbortSignal.timeout(10000)});
+    const response = await fetch(streamURL(master), {signal: AbortSignal.timeout(10000)});
     if (!response.ok) throw new Error('Manifest unavailable');
     const lines = (await response.text()).split(/\r?\n/).map(s => s.trim());
     const variants = [];
@@ -152,17 +195,17 @@ async function nativeQualityPicker(video, master, current) {
       const bitrate = Number(lines[i].match(/BANDWIDTH=(\d+)/)?.[1] || 0);
       let next = i + 1;
       while (next < lines.length && (!lines[next] || lines[next].startsWith('#'))) next++;
-      if (height && lines[next]) variants.push({height, bitrate, url: new URL(lines[next], master).href});
+      if (height && lines[next]) variants.push({height, bitrate, url: new URL(lines[next], location.origin).href});
     }
     if (!current()) return;
-    if (!variants.length) { video.src = master; return; }
+    if (!variants.length) { video.src = streamURL(master); return; }
     addQualityPicker(video, variants, variant => {
       const position = video.currentTime;
       const resume = !video.paused || !video.hasAttribute('data-started');
       video.setAttribute('data-started', 'true');
       const rate = video.playbackRate, volume = video.volume, muted = video.muted;
       video.autoplay = resume;
-      video.src = variant?.url || master;
+      video.src = variant?.url || streamURL(master);
       video.onloadedmetadata = () => {
         if (!current()) return;
         if (position > 0) video.currentTime = Math.min(position, Number.isFinite(video.duration) ? Math.max(0, video.duration - .1) : position);
@@ -172,7 +215,7 @@ async function nativeQualityPicker(video, master, current) {
       video.load();
     }, current);
   } catch {
-    if (current()) { video.src = master; toast(t('Quality selection unavailable for this source.', 'اختيار الجودة غير متاح لهذا المصدر.')); }
+    if (current()) { video.src = streamURL(master); toast(t('Quality selection unavailable for this source.', 'اختيار الجودة غير متاح لهذا المصدر.')); }
   }
 }
 function directVideo(data, current) {
@@ -180,8 +223,26 @@ function directVideo(data, current) {
   video.controls = true; video.autoplay = true; video.playsInline = true;
   video.addEventListener('error', () => { if(current()) toast(t('This video could not be loaded. Retry the player.', 'تعذر تحميل الفيديو. أعد تحميل المشغل.')); });
   $('#player').append(video);
+  const progress = document.createElement('p');progress.className='notice';progress.setAttribute('role','status');
+  progress.textContent=t('Loading video and available qualities…','جارٍ تحميل الفيديو والجودات المتاحة…');
+  $('#player').append(progress);
+  const fail = () => {
+    if(!current())return;
+    clearInterval(videoLoadTimer);
+    if(hlsPlayer){hlsPlayer.destroy();hlsPlayer=null}
+    video.pause();progress.setAttribute('role','alert');
+    progress.textContent=$('#mirror-controls button')?t('This server stopped loading. Choose another video server above or use Retry player.','توقف هذا الخادم عن التحميل. اختر خادم مشاهدة آخر أعلاه أو أعد تحميل المشغل.'):t('The video could not be loaded. Use Retry player to refresh the source.','تعذر تحميل الفيديو. اضغط إعادة تحميل المشغل لتحديث المصدر.');
+  };
+  video.addEventListener('error',fail);
+  let lastProgress=Date.now(),lastTime=0;
+  videoLoadTimer=setInterval(()=>{
+    if(!current()){clearInterval(videoLoadTimer);return}
+    if(video.currentTime>lastTime+.05){lastTime=video.currentTime;lastProgress=Date.now();progress.textContent=t('Direct video · Quality controls below.','فيديو مباشر · اختر الجودة أدناه.');return}
+    if(video.paused&&video.readyState>=3){lastProgress=Date.now();return}
+    if(Date.now()-lastProgress>20000)fail();
+  },1000);
   if (data.format === 'hls' && window.Hls?.isSupported()) {
-    const engine = new Hls({startLevel: -1});
+    const engine = new Hls({startLevel: -1, manifestLoadPolicy: {default: {maxTimeToFirstByteMs: 8000, maxLoadTimeMs: 12000, timeoutRetry: {maxNumRetry: 1, retryDelayMs: 500, maxRetryDelayMs: 1000}, errorRetry: {maxNumRetry: 1, retryDelayMs: 500, maxRetryDelayMs: 1000}}}});
     hlsPlayer = engine;
     engine.on(Hls.Events.MANIFEST_PARSED, () => {
       if (!current()) return;
@@ -191,12 +252,13 @@ function directVideo(data, current) {
       }, current);
       video.play().catch(() => {});
     });
-    engine.on(Hls.Events.ERROR, (_, error) => { if (current() && error.fatal) toast(t('Video connection failed. Retry the player.', 'تعذر الاتصال بالفيديو. أعد تحميل المشغل.')); });
-    engine.loadSource(data.media); engine.attachMedia(video);
+    engine.on(Hls.Events.ERROR, (_, error) => { if (current() && error.fatal) fail(); });
+    engine.loadSource(streamURL(data.media)); engine.attachMedia(video);
   } else if (data.format === 'hls' && video.canPlayType('application/vnd.apple.mpegurl')) {
     void nativeQualityPicker(video, data.media, current);
   } else if (data.format !== 'hls') {
-    video.src = data.media;
+    video.addEventListener('canplay',()=>{if(current())video.play().catch(()=>{progress.textContent=t('Press ▶ in the video to start playback.','اضغط ▶ داخل الفيديو لبدء المشاهدة.')})},{once:true});
+    video.src = data.proxied?streamURL(data.media):data.media;
     const notice = document.createElement('p'); notice.className = 'quality-status';
     notice.textContent = t('Original quality · one version available', 'الجودة الأصلية · نسخة واحدة متاحة'); video.after(notice);
   } else {
@@ -207,9 +269,16 @@ function directVideo(data, current) {
   $('#player').append(note);
 }
 
-async function playSelected() {
+function renderMirrors(data){
+ const controls=$('#mirror-controls');controls.replaceChildren();
+ if(!data.mirrors?.length)return;
+ const label=document.createElement('span');label.className='sub';label.textContent=t('Video server:','خادم المشاهدة:');controls.append(label);
+ for(const mirror of data.mirrors){const button=document.createElement('button');button.textContent=mirror.name;button.classList.toggle('active-server',mirror.id===data.selectedServer);button.setAttribute('aria-pressed',String(mirror.id===data.selectedServer));button.dataset.mirror=mirror.id;button.onclick=()=>playSelected(mirror.id);controls.append(button)}
+}
+async function playSelected(mirror=selectedMirror) {
   const x = selected;
   if (!x) return;
+  selectedMirror=mirror;
   stopVideo();
   const requestID = ++playbackRequest;
   clearTimeout(playerLoadTimer);
@@ -219,10 +288,14 @@ async function playSelected() {
   $('#player').innerHTML = '<p class="notice" role="status">' + t('Finding available video servers…', 'جارٍ البحث عن خوادم المشاهدة…') + '</p>';
   const current = () => selected?.url === x.url && requestID === playbackRequest;
   try {
-    const d = await requestJSON('/api/play?url=' + encodeURIComponent(x.url));
+    const d = await requestJSON('/api/play?source='+encodeURIComponent(itemSource(x))+'&url=' + encodeURIComponent(x.url)+(mirror===null?'':'&server='+encodeURIComponent(mirror)));
     if (!current()) return;
+    if(d.source!==itemSource(x))throw Error('Unexpected playback source');
+    $('#playback-source').textContent=t('Video source: ','مصدر الفيديو: ')+sourceNames[d.source]+(d.provider?' · '+d.provider:'');
+    if(d.selectedServer!==undefined)selectedMirror=d.selectedServer;
+    renderMirrors(d);
     $('#player').replaceChildren();
-    const compatibleServers = (d.servers || []).filter(s => s.driver === 'streamruby' || /^streamruby(?:\s|$)/i.test(s.name || ''));
+    const compatibleServers = (d.servers || []).filter(s => s.driver === 'streamruby' || (d.source==='topcinema'&&s.driver==='topcinema-embed') || /^streamruby(?:\s|$)/i.test(s.name || ''));
     if (d.media) {
       directVideo(d, current);
     } else if (compatibleServers.length) {
@@ -249,7 +322,7 @@ async function playSelected() {
         frame.src = server.url;
         controls.querySelectorAll('button').forEach(b => b.classList.toggle('active-server', b === button));
         playerLoadTimer = setTimeout(() => {
-          if (current()) status.textContent = t('The provider is taking too long. Try Retry player or another title.', 'استغرق الخادم وقتًا طويلًا. أعد تحميل المشغل أو جرّب عنوانًا آخر.');
+          if (current()) status.textContent = t('The provider is taking too long. Try another video server above or Retry player.', 'استغرق الخادم وقتًا طويلًا. جرّب خادم مشاهدة آخر أعلاه أو أعد تحميل المشغل.');
         }, 18000);
       };
       for (const [i, server] of compatibleServers.entries()) {
@@ -261,10 +334,11 @@ async function playSelected() {
       // A Play click must actually mount and load the player.
       controls.firstElementChild.click();
     } else {
-      $('#player').innerHTML = '<p class="notice" role="alert">' + t('No compatible video source is available for this title right now. Other providers require pop-ups or reject protected playback. Try another episode or title.', 'لا يتوفر مصدر فيديو متوافق لهذا العنوان حاليًا. الخوادم الأخرى ترفض المشاهدة المحمية. جرّب حلقة أو عنوانًا آخر.') + '</p>';
+      $('#player').innerHTML = '<p class="notice" role="alert">' + t('No compatible video source is available for this title right now. Try another video server above, or search another site below.', 'لا يتوفر مصدر فيديو متوافق لهذا العنوان حاليًا. جرّب خادم مشاهدة آخر أعلاه أو ابحث في موقع آخر أدناه.') + '</p>';
     }
-  } catch {
-    if (current()) $('#player').innerHTML = '<p class="notice" role="alert">' + t('Could not reach the video source. Use Retry player to try again.', 'تعذر الاتصال بمصدر الفيديو. أعد تحميل المشغل للمحاولة مجددًا.') + '</p>';
+  } catch(error) {
+    if (current()&&error.code==='source_verification'){$('#player').innerHTML='<p class="notice" role="alert">'+t('This source requires verification and is blocking access. Search another source below.','المصدر يتطلب التحقق ويمنع الوصول. ابحث في مصدر آخر أدناه.')+'</p>';}
+    else if (current()) $('#player').innerHTML = '<p class="notice" role="alert">' + t('Could not reach the video source. Use Retry player to try again.', 'تعذر الاتصال بمصدر الفيديو. أعد تحميل المشغل للمحاولة مجددًا.') + '</p>';
   } finally {
     if (current()) {
       $('#detail-play').disabled = false;
@@ -273,5 +347,5 @@ async function playSelected() {
   }
 }
 
-document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.open)openDetails([...catalog,...saved].find(x=>x.url===b.dataset.open),true);if(b.dataset.save)save([...catalog,...saved].find(x=>x.url===b.dataset.save));if(b.dataset.nav)navigate(b.dataset.nav);if(b.dataset.filter){filter=b.dataset.filter;view='home';render()}if(b.dataset.category)navigate(b.dataset.category);if(b.dataset.scroll)$('#shelf-'+b.dataset.scroll).scrollBy({left:Number(b.dataset.dir)*500,behavior:'smooth'})});$('#hero-info').onclick=()=>openDetails(spotlight);$('#hero-play').onclick=()=>openDetails(spotlight,true);$('#hero-save').onclick=()=>save(spotlight);$('#detail-save').onclick=()=>save(selected);$('#detail-play').onclick=playSelected;$('#close').onclick=()=>$('#details').close();$('#details').addEventListener('close',()=>{if($('#details').open)return;stopVideo();playbackRequest++;clearTimeout(playerLoadTimer);$('#player').replaceChildren();selected=null;$('#details').classList.remove('playing')});$('#details').onclick=e=>{if(e.target===$('#details'))$('#details').close()};$('#sort').onchange=render;$('#profile').onclick=()=>navigate('list');$('#search-toggle').onclick=()=>{$('#search-box').classList.toggle('open');if($('#search-box').classList.contains('open')){$('#search').focus();$('#hero').classList.add('hidden');$('.main').style.marginTop='0'}else{$('#search').value='';render()}};$('#search').oninput=()=>{clearTimeout(searchTimer);render();const q=$('#search').value.trim();if(q.length<2)return;searchTimer=setTimeout(async()=>{try{const d=await fetch('/api/catalog?q='+encodeURIComponent(q)).then(r=>r.json());if($('#search').value.trim()!==q)return;catalog=[...new Map([...catalog,...d.items].map(x=>[x.url,x])).values()];render()}catch{}},450)};$('#load-more').onclick=()=>{page++;refresh(true)};function translate(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.querySelectorAll('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);$('#language').textContent=lang==='en'?'العربية':'English';$('#search').placeholder=t('Search movies, series, anime…','ابحث عن الأفلام والمسلسلات والأنمي…');render()}$('#language').onclick=()=>{lang=lang==='en'?'ar':'en';try{localStorage.setItem('layali-lang',lang)}catch{}translate()};translate();refresh();
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.open)openDetails([...catalog,...saved].find(x=>x.url===b.dataset.open),true);if(b.dataset.save)save([...catalog,...saved].find(x=>x.url===b.dataset.save));if(b.dataset.nav)navigate(b.dataset.nav);if(b.dataset.filter){filter=b.dataset.filter;view='home';render()}if(b.dataset.category)navigate(b.dataset.category);if(b.dataset.scroll)$('#shelf-'+b.dataset.scroll).scrollBy({left:Number(b.dataset.dir)*500,behavior:'smooth'})});$('#hero-info').onclick=()=>openDetails(spotlight);$('#hero-play').onclick=()=>openDetails(spotlight,true);$('#hero-save').onclick=()=>save(spotlight);$('#detail-save').onclick=()=>save(selected);$('#detail-play').onclick=()=>playSelected();$('#close').onclick=()=>$('#details').close();$('#details').addEventListener('close',()=>{if($('#details').open)return;stopVideo();playbackRequest++;clearTimeout(playerLoadTimer);$('#player').replaceChildren();selected=null;$('#details').classList.remove('playing')});$('#details').onclick=e=>{if(e.target===$('#details'))$('#details').close()};$('#sort').onchange=render;$('#profile').onclick=()=>navigate('list');$('#search-toggle').onclick=()=>{$('#search-box').classList.toggle('open');if($('#search-box').classList.contains('open')){$('#search').focus();$('#hero').classList.add('hidden');$('.main').style.marginTop='0'}else{const searched=!!$('#search').value;clearTimeout(searchTimer);$('#search').value='';render();if(searched){page=1;void refresh()}}};$('#search').oninput=()=>{clearTimeout(searchTimer);catalogRequest++;render();searchTimer=setTimeout(()=>{page=1;void refresh()},450)};$('#load-more').onclick=()=>{page++;refresh(true)};function translate(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.querySelectorAll('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);$('#language').textContent=lang==='en'?'العربية':'English';$('#search').placeholder=t('Search movies, series, anime…','ابحث عن الأفلام والمسلسلات والأنمي…');render()}$('#language').onclick=()=>{lang=lang==='en'?'ar':'en';try{localStorage.setItem('layali-lang',lang)}catch{}translate()};translate();refresh();
 </script></body></html>
